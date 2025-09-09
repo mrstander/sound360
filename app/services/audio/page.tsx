@@ -75,11 +75,9 @@ export default function AudioPage() {
 
   const applications = [
     "Corporate Conferences",
-    "Live Concerts",
     "Wedding Ceremonies",
     "Product Launches",
     "Awards Ceremonies",
-    "Festival Main Stages",
   ]
 
   const features = ["Digital Console Mixing", "High quality Audio", "Wireless Microphones", "Recording & Playback"]
@@ -125,10 +123,10 @@ export default function AudioPage() {
         <section className="py-24 bg-black text-white relative overflow-hidden bg-[url('/images/section-background.png')] bg-cover bg-center">
           <div className="absolute inset-0">
             <Image
-              src="/images/sound360-gallery-item-11.webp"
+              src="/images/section-background.png"
               alt="Professional Audio Console"
               fill
-              className="object-cover filter grayscale opacity-30"
+              className="object-cover filter grayscale opacity-80"
             />
             <div className="absolute inset-0 bg-black/70" />
           </div>
@@ -174,7 +172,7 @@ export default function AudioPage() {
                   </div>
 
                   <Link href="/contact">
-                    <Button className="bg-sound360 hover:bg-sound360-dark text-white px-8 py-3 rounded-full">
+                    <Button className="bg-gray-900 hover:bg-sound360-dark text-white px-8 py-3 rounded-full">
                       Get Audio Quote
                     </Button>
                   </Link>
@@ -233,31 +231,7 @@ export default function AudioPage() {
 
         
 
-        {/* Applications Section */}
-        <section className="py-24 bg-gray-50">
-          <div className="container mx-auto px-4">
-            <div className="max-w-6xl mx-auto">
-              <div className="grid lg:grid-cols-1 gap-16 items-center">
-              
-                <div>
-                  <h2 className="text-4xl md:text-5xl font-bold text-black mb-6">Perfect for Any Event</h2>
-                  <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-                    Our professional audio services are designed to meet the unique requirements of various event types
-                    and venues.
-                  </p>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    {applications.map((application, index) => (
-                      <div key={index} className="flex items-center">
-                        <div className="w-2 h-2 bg-sound360 rounded-full mr-3" />
-                        <span className="text-gray-700">{application}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        
 
         
       </main>

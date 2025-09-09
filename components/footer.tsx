@@ -38,7 +38,7 @@ export function Footer() {
             </Link>
 
             <p className="text-gray-300 leading-relaxed mb-6 max-w-md">
-              South Africa&apos;s premier provider of professional audio,
+              Cape Town's premier provider of professional audio,
               lighting, and visual solutions. We transform events with
               cutting-edge technology and unmatched expertise.
             </p>
