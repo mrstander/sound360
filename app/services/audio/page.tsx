@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
-import { Volume2, Mic, Speaker, Headphones, Settings, CheckCircle } from "lucide-react"
+import { Volume2, Mic, Speaker, Headphones, Settings } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import Link from "next/link"
@@ -82,13 +82,39 @@ export default function AudioPage() {
     "Festival Main Stages",
   ]
 
-  const features = [
-    "24-bit/96kHz digital processing",
-    "Redundant system backup",
-    "Real-time frequency analysis",
-    "Wireless coordination",
-    "Multi-zone audio distribution",
-    "Professional acoustic treatment",
+  const features = ["Digital Console Mixing", "High quality Audio", "Wireless Microphones", "Recording & Playback"]
+
+  const galleryImages = [
+    {
+      src: "/images/sound360-gallery-item-01.webp",
+      alt: "Professional audio setup on Cape Town rooftop with city views",
+      title: "Rooftop Event Audio Setup",
+    },
+    {
+      src: "/images/sound360-gallery-item-11.webp",
+      alt: "Indoor event audio and lighting setup with dance floor",
+      title: "Corporate Event Production",
+    },
+    {
+      src: "/images/sound360-gallery-item-26.webp",
+      alt: "Professional DJ setup with Table Mountain view in Cape Town",
+      title: "Premium Venue Audio System",
+    },
+    {
+      src: "/images/sound360-gallery-item-18.webp",
+      alt: "Outdoor rooftop audio equipment with Cape Town skyline",
+      title: "Outdoor Event Audio",
+    },
+    {
+      src: "/images/sound360-gallery-item-19.webp",
+      alt: "Vineyard event audio setup with scenic wine country backdrop",
+      title: "Vineyard Event Audio",
+    },
+    {
+      src: "/images/sound360-gallery-item-03.webp",
+      alt: "Professional audio and lighting setup with LED dance floor",
+      title: "Complete Audio & Lighting Package",
+    },
   ]
 
   return (
@@ -96,10 +122,10 @@ export default function AudioPage() {
       <Header />
       <main className="pt-32">
         {/* Hero Section */}
-        <section className="py-24 bg-black text-white relative overflow-hidden bg-[url('/images/section-background.png')] bg-cover bg-cente">
+        <section className="py-24 bg-black text-white relative overflow-hidden bg-[url('/images/section-background.png')] bg-cover bg-center">
           <div className="absolute inset-0">
             <Image
-              src="/images/download (2).jpeg"
+              src="/images/sound360-gallery-item-11.webp"
               alt="Professional Audio Console"
               fill
               className="object-cover filter grayscale opacity-30"
@@ -120,37 +146,47 @@ export default function AudioPage() {
           </div>
         </section>
 
-        {/* Overview Section */}
+        {/* Service Details Section - From Services Page */}
         <section className="py-24 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
               <div className="grid lg:grid-cols-2 gap-16 items-center">
                 <div>
-                  <h2 className="text-4xl md:text-5xl font-bold text-black mb-6">Exceptional Audio Quality</h2>
+                  <div className="bg-sound360 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
+                    <Volume2 className="w-8 h-8 text-white" />
+                  </div>
+                  <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">Professional Audio</h2>
                   <p className="text-xl text-gray-600 mb-6 leading-relaxed">
-                    Our professional audio services combine cutting-edge technology with expert engineering to deliver
-                    pristine sound quality for any event type or venue size.
+                    Crystal-clear sound systems, mixing consoles, and acoustic solutions for any venue size.
                   </p>
                   <p className="text-gray-700 mb-8 leading-relaxed">
-                    From intimate boardroom presentations to large-scale outdoor festivals, we provide comprehensive
-                    audio solutions that ensure your message is heard clearly by every audience member.
+                    From intimate presentations to large-scale concerts, our professional audio solutions ensure every
+                    word and note is heard with perfect clarity.
                   </p>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    {features.map((feature, index) => (
-                      <div key={index} className="flex items-center">
-                        <CheckCircle className="w-5 h-5 text-sound360 mr-3 flex-shrink-0" />
+
+                  <div className="grid md:grid-cols-2 gap-4 mb-8">
+                    {features.map((feature, featureIndex) => (
+                      <div key={featureIndex} className="flex items-center">
+                        <div className="w-2 h-2 bg-sound360 rounded-full mr-3" />
                         <span className="text-gray-700">{feature}</span>
                       </div>
                     ))}
                   </div>
+
+                  <Link href="/contact">
+                    <Button className="bg-sound360 hover:bg-sound360-dark text-white px-8 py-3 rounded-full">
+                      Get Audio Quote
+                    </Button>
+                  </Link>
                 </div>
+
                 <div className="aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl">
                   <Image
-                    src="/images/download (2).jpeg"
+                    src="/images/audio.jpeg"
                     alt="Professional Audio Setup"
                     width={600}
                     height={450}
-                    className="w-full h-full object-cover filter grayscale"
+                    className="w-full h-full object-cover"
                   />
                 </div>
               </div>
@@ -158,53 +194,51 @@ export default function AudioPage() {
           </div>
         </section>
 
-        {/* Equipment Section */}
+        {/* Gallery Section */}
         <section className="py-24 bg-gray-50">
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
               <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold text-black mb-6">Professional Equipment</h2>
+                <h2 className="text-4xl md:text-5xl font-bold text-black mb-6">Audio Setup Gallery</h2>
                 <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                  We use only the finest professional audio equipment from industry-leading manufacturers to ensure
-                  exceptional sound quality.
+                  Explore our professional audio installations across Cape Town's most prestigious venues and events.
                 </p>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-8">
-                {equipment.map((item, index) => {
-                  const Icon = item.icon
-                  return (
-                    <div
-                      key={index}
-                      className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
-                    >
-                      <div className="bg-sound360 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
-                        <Icon className="w-8 h-8 text-white" />
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {galleryImages.map((image, index) => (
+                  <div
+                    key={index}
+                    className="group bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100"
+                  >
+                    <div className="aspect-[4/3] relative overflow-hidden">
+                      <Image
+                        src={image.src || "/placeholder.svg"}
+                        alt={image.alt}
+                        fill
+                        className="object-cover group-hover:scale-110 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <div className="absolute bottom-4 left-4 right-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <h3 className="text-lg font-bold mb-1">{image.title}</h3>
+                        <p className="text-sm text-white/90">{image.alt}</p>
                       </div>
-                      <h3 className="text-2xl font-bold text-black mb-4">{item.name}</h3>
-                      <p className="text-gray-600 leading-relaxed">{item.description}</p>
                     </div>
-                  )
-                })}
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         </section>
 
+        
+
         {/* Applications Section */}
-        <section className="py-24 bg-white">
+        <section className="py-24 bg-gray-50">
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
-              <div className="grid lg:grid-cols-2 gap-16 items-center">
-                <div className="aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl">
-                  <Image
-                    src="/images/event-crowd.png"
-                    alt="Live Event Audio"
-                    width={600}
-                    height={450}
-                    className="w-full h-full object-cover filter grayscale"
-                  />
-                </div>
+              <div className="grid lg:grid-cols-1 gap-16 items-center">
+              
                 <div>
                   <h2 className="text-4xl md:text-5xl font-bold text-black mb-6">Perfect for Any Event</h2>
                   <p className="text-xl text-gray-600 mb-8 leading-relaxed">
@@ -225,36 +259,7 @@ export default function AudioPage() {
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="py-24 bg-black text-white">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">Ready for Perfect Audio?</h2>
-              <p className="text-xl text-white/90 mb-8 leading-relaxed">
-                Let our audio experts design a custom sound solution that ensures your event sounds as good as it looks.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href="/contact">
-                  <Button
-                    size="lg"
-                    className="bg-sound360 text-white hover:bg-sound360-dark px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-                  >
-                    Get Audio Quote
-                  </Button>
-                </Link>
-                <Link href="/services">
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="border-2 border-white text-white hover:bg-sound360 hover:text-black px-8 py-4 rounded-full transition-all duration-300 hover:scale-105 bg-transparent"
-                  >
-                    View All Services
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
+        
       </main>
       <Footer />
     </>
