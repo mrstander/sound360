@@ -419,10 +419,3 @@ return (
     </>
   )
 }
-
-// Extend the Window interface to include emailjs
-declare global {
-  interface Window {
-    emailjs?: any
-  }
-}
