@@ -1,6 +1,6 @@
 "use server"
 
-export async function submitContactForm(formData: FormData) {
+export async function submitContactFormNetlify(formData: FormData) {
   const firstName = formData.get("firstName") as string
   const lastName = formData.get("lastName") as string
   const email = formData.get("email") as string
@@ -15,30 +15,9 @@ export async function submitContactForm(formData: FormData) {
   if (formData.get("visual")) services.push("Visual Solutions")
   if (formData.get("production")) services.push("Event Production")
 
-  try {
-    // Using EmailJS API with your credentials
-    const response = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        service_id: "service_lymqut7",
-        template_id: "template_grwciu9",
-        user_id: "bg5HZVouxshZhoXg_",
-        template_params: {
-          from_name: `${firstName} ${lastName}`,
-          first_name: firstName,
-          last_name: lastName,
-          from_email: email,
-          phone: phone || "Not provided",
-          event_type: eventType || "Not specified",
-          services: services.length > 0 ? services.join(", ") : "Not specified",
-          message: message,
-          to_email: "info@sound360.co.za",
-          reply_to: email,
-          // Additional template variables you can use
-          full_message: `
+  const emailContent = `
+New Contact Form Submission - Sound360
+
 Contact Information:
 - Name: ${firstName} ${lastName}
 - Email: ${email}
@@ -53,9 +32,24 @@ ${message}
 
 ---
 Submitted from Sound360 website contact form
-          `.trim(),
-        },
-      }),
+  `.trim()
+
+  try {
+    // Using Netlify Forms (if deployed on Netlify - completely free)
+    const response = await fetch("/__forms.html", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({
+        "form-name": "contact",
+        name: `${firstName} ${lastName}`,
+        email: email,
+        phone: phone || "",
+        eventType: eventType || "",
+        services: services.join(", "),
+        message: message,
+      }).toString(),
     })
 
     if (response.ok) {
@@ -64,8 +58,6 @@ Submitted from Sound360 website contact form
         message: "Thank you! Your message has been sent successfully. We'll get back to you within 2 hours.",
       }
     } else {
-      const errorData = await response.text()
-      console.error("EmailJS Error:", errorData)
       throw new Error("Failed to send email")
     }
   } catch (error) {

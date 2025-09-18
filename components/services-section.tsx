@@ -1,13 +1,15 @@
-import { Volume2, Lightbulb, Monitor, Settings } from "lucide-react"
+"use client"
+
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import Link from "next/link"
+import { Lordicon } from "./lordicon"
 
 export function ServicesSection() {
   const services = [
     {
       name: "Professional Audio",
-      icon: Volume2,
+      iconSrc: "https://cdn.lordicon.com/jectmwqf.json",
       description: "Crystal-clear sound systems, mixing consoles, and acoustic solutions for any venue size.",
       features: ["Digital Console Mixing", "High quality Audio", "Wireless Microphones", "Recording & Playback"],
       image: "/images/audio.jpeg",
@@ -15,7 +17,7 @@ export function ServicesSection() {
     },
     {
       name: "Stage Lighting",
-      icon: Lightbulb,
+      iconSrc: "https://cdn.lordicon.com/fkdzyfle.json",
       description: "Dynamic lighting design that transforms your event with spectacular visual effects.",
       features: ["LED Moving Lights", "Intelligent Fixtures", "Haze & Fog Effects", "DMX Control Systems"],
       image: "/images/concert-crowd-lighting.png",
@@ -23,7 +25,7 @@ export function ServicesSection() {
     },
     {
       name: "Visual Solutions",
-      icon: Monitor,
+      iconSrc: "https://cdn.lordicon.com/eszyyflr.json",
       description: "High-resolution LED displays and projection systems for impactful visual presentations.",
       features: ["LED Video Walls", "Projection Mapping", "Live Camera Systems", "Content Management"],
       image: "/images/visual-solutions.png",
@@ -31,7 +33,7 @@ export function ServicesSection() {
     },
     {
       name: "Event Production",
-      icon: Settings,
+      iconSrc: "https://cdn.lordicon.com/qhviklyi.json",
       description: "Complete event production including rigging, trussing, livestreaming, and power solutions.",
       features: ["Rigging & Trussing", "Livestreaming", "Power Distribution", "Project Management"],
       image: "/images/wedding-venue-projection.png",
@@ -39,7 +41,7 @@ export function ServicesSection() {
     },
     {
       name: "Dance Floor",
-      icon: Settings,
+      iconSrc: "https://cdn.lordicon.com/mecwbjnp.json",
       description:
         "Create the perfect space with premium flooring solutions to elevate your exhibition or dance the night away, often enhanced by lighting and effects to create the desired atmosphere.",
       features: [""],
@@ -63,59 +65,61 @@ export function ServicesSection() {
 
           {/* Services Grid - First 4 services */}
           <div className="grid md:grid-cols-2 gap-8 mb-16">
-            {services.slice(0, 4).map((service, index) => {
-              const Icon = service.icon
-              return (
-                <div
-                  key={index}
-                  className="group bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100"
-                >
-                  {/* Service Image */}
-                  <div className="aspect-[16/9] relative overflow-hidden">
-                    <Image
-                      src={service.image || "/placeholder.svg"}
-                      alt={service.name}
-                      fill
-                      className="object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors duration-300" />
-                    <div className="absolute top-4 left-4">
-                      <div className="bg-sound360/20 backdrop-blur-sm w-16 h-16 rounded-2xl flex items-center justify-center">
-                        <Icon className="w-8 h-8 text-sound360" />
-                      </div>
+            {services.slice(0, 4).map((service, index) => (
+              <div
+                key={index}
+                className="group bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100"
+              >
+                {/* Service Image */}
+                <div className="aspect-[16/9] relative overflow-hidden">
+                  <Image
+                    src={service.image || "/placeholder.svg"}
+                    alt={service.name}
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors duration-300" />
+                  <div className="absolute top-4 left-4">
+                    <div className="bg-sound360/20 backdrop-blur-sm w-16 h-16 rounded-2xl flex items-center justify-center">
+                      <Lordicon
+                        src={service.iconSrc}
+                        trigger="hover"
+                        colors="primary:#ffffff,secondary:#0084d1"
+                        size={32}
+                      />
                     </div>
                   </div>
-
-                  <div className="p-8">
-                    {/* Content */}
-                    <h3 className="text-2xl font-bold text-black mb-4 group-hover:text-gray-700 transition-colors">
-                      {service.name}
-                    </h3>
-                    <p className="text-gray-600 mb-6 leading-relaxed">{service.description}</p>
-
-                    {/* Features */}
-                    <ul className="space-y-2 mb-6">
-                      {service.features.map((feature, featureIndex) => (
-                        <li key={featureIndex} className="flex items-center text-sm text-gray-600">
-                          <div className="w-2 h-2 bg-sound360 rounded-full mr-3" />
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-
-                    {/* CTA */}
-                    <Link href={service.href}>
-                      <Button
-                        variant="outline"
-                        className="group-hover:bg-sound360 group-hover:text-white group-hover:border-sound360 transition-all duration-300 bg-transparent border-gray-300 w-full"
-                      >
-                        Learn More
-                      </Button>
-                    </Link>
-                  </div>
                 </div>
-              )
-            })}
+
+                <div className="p-8">
+                  {/* Content */}
+                  <h3 className="text-2xl font-bold text-black mb-4 group-hover:text-gray-700 transition-colors">
+                    {service.name}
+                  </h3>
+                  <p className="text-gray-600 mb-6 leading-relaxed">{service.description}</p>
+
+                  {/* Features */}
+                  <ul className="space-y-2 mb-6">
+                    {service.features.map((feature, featureIndex) => (
+                      <li key={featureIndex} className="flex items-center text-sm text-gray-600">
+                        <div className="w-2 h-2 bg-sound360 rounded-full mr-3" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* CTA */}
+                  <Link href={service.href}>
+                    <Button
+                      
+                      className="bg-black hover:bg-gray-800 text-white py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      Learn More
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            ))}
           </div>
 
           {/* 5th Service - Full Width Layout on Desktop, Card Layout on Mobile */}
@@ -127,7 +131,12 @@ export function ServicesSection() {
                   {/* Text Content - Left Side */}
                   <div className="p-12 text-center lg:text-left flex flex-col justify-center">
                     <div className="bg-sound360 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 mx-auto lg:mx-0">
-                      <Settings className="w-8 h-8 text-white" />
+                      <Lordicon
+                        src={services[4].iconSrc}
+                        trigger="hover"
+                        colors="primary:#ffffff,secondary:#0084d1"
+                        size={32}
+                      />
                     </div>
                     <h3 className="text-3xl md:text-4xl font-bold text-black mb-6">{services[4].name}</h3>
                     <p className="text-xl text-gray-600 mb-8 leading-relaxed">{services[4].description}</p>
@@ -151,11 +160,11 @@ export function ServicesSection() {
                     <div className="mt-auto">
                       <Link href={services[4].href}>
                         <Button
-                        variant="outline"
-                        className="group-hover:bg-sound360 group-hover:text-white group-hover:border-sound360 transition-all duration-300 bg-transparent border-gray-300 w-full"
-                      >
-                        Learn More
-                      </Button>
+                          variant="outline"
+                          className="bg-black hover:bg-gray-800 text-white py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          Learn More
+                        </Button>
                       </Link>
                     </div>
                   </div>
@@ -187,7 +196,12 @@ export function ServicesSection() {
                       <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors duration-300" />
                       <div className="absolute top-4 left-4">
                         <div className="bg-sound360/20 backdrop-blur-sm w-16 h-16 rounded-2xl flex items-center justify-center">
-                          <Settings className="w-8 h-8 text-sound360" />
+                          <Lordicon
+                            src={services[4].iconSrc}
+                            trigger="hover"
+                            colors="primary:#ffffff,secondary:#0084d1"
+                            size={32}
+                          />
                         </div>
                       </div>
                     </div>
@@ -214,8 +228,8 @@ export function ServicesSection() {
                       {/* CTA */}
                       <Link href={services[4].href}>
                         <Button
-                          variant="outline"
-                          className="group-hover:bg-sound360 group-hover:text-white group-hover:border-sound360 transition-all duration-300 bg-transparent border-gray-300 w-full"
+                        
+                          className="w-full bg-black hover:bg-gray-800 text-white py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                           Learn More
                         </Button>

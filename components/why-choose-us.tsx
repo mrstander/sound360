@@ -1,22 +1,26 @@
-import { Shield, Clock, Award } from "lucide-react"
+"use client"
+
+import { Lordicon } from "./lordicon"
 
 export function WhyChooseUs() {
   const reasons = [
     {
-      icon: Clock,
+      iconSrc: "https://cdn.lordicon.com/fsstjlds.json",
       title: "Excellence, Every Time",
       description:
         "Driven by creativity and attention to detail, we go beyond expectations to deliver flawless, unforgettable events.",
     },
     {
-      icon: Shield,
+      iconSrc: "https://cdn.lordicon.com/fozsorqm.json",
       title: "Seamless Service, Total Assurance",
-      description: "Every detail is managed with care, giving you the confidence and peace of mind that your event is in expert hands.",
+      description:
+        "Every detail is managed with care, giving you the confidence and peace of mind that your event is in expert hands.",
     },
     {
-      icon: Award,
+      iconSrc: "https://cdn.lordicon.com/rzgcaxjz.json",
       title: "Creativity in Action",
-      description: "We don’t just follow the script — we ask the right questions, push boundaries, and find smarter ways to create unforgettable experiences.",
+      description:
+        "We don't just follow the script — we ask the right questions, push boundaries, and find smarter ways to create unforgettable experiences.",
     },
   ]
 
@@ -41,21 +45,18 @@ export function WhyChooseUs() {
 
           {/* Reasons Grid */}
           <div className="grid md:grid-cols-3 lg:grid-cols-3 gap-8">
-            {reasons.map((reason, index) => {
-              const Icon = reason.icon
-              return (
-                <div
-                  key={index}
-                  className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105 text-center"
-                >
-                  <div className="bg-sound360/20 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                    <Icon className="w-10 h-10 text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-4">{reason.title}</h3>
-                  <p className="text-white/80 leading-relaxed">{reason.description}</p>
+            {reasons.map((reason, index) => (
+              <div
+                key={index}
+                className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105 text-center"
+              >
+                <div className="flex items-center justify-center mx-auto mb-6">
+                  <Lordicon src={reason.iconSrc} trigger="hover" colors="primary:#fff,secondary:#0084d1" size={64} />
                 </div>
-              )
-            })}
+                <h3 className="text-xl font-bold text-white mb-4">{reason.title}</h3>
+                <p className="text-white/80 leading-relaxed">{reason.description}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>

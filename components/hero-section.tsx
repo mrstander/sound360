@@ -135,7 +135,7 @@ export function HeroSection() {
             <Button
               size="lg"
               variant="outline"
-              className="border-2 border-white text-white hover:bg-sound360 hover:text-white hover:border-sound360 px-8 py-4 rounded-full bg-transparent backdrop-blur-sm transition-all duration-300 hover:scale-105 group"
+              className="border-2 border-white text-white hover:bg-sound360 hover:text-white hover:border-sound360 px-8 py-4 rounded-xl bg-transparent backdrop-blur-sm transition-all duration-300 hover:scale-105 group"
             >
               <Play className="mr-2 w-5 h-5 group-hover:scale-110 transition-transform" />
               Explore Our Services

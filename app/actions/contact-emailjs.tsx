@@ -1,6 +1,6 @@
 "use server"
 
-export async function submitContactForm(formData: FormData) {
+export async function submitContactFormEmailJS(formData: FormData) {
   const firstName = formData.get("firstName") as string
   const lastName = formData.get("lastName") as string
   const email = formData.get("email") as string
@@ -16,44 +16,24 @@ export async function submitContactForm(formData: FormData) {
   if (formData.get("production")) services.push("Event Production")
 
   try {
-    // Using EmailJS API with your credentials
+    // Using EmailJS API directly (free tier: 200 emails/month)
     const response = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        service_id: "service_lymqut7",
-        template_id: "template_grwciu9",
-        user_id: "bg5HZVouxshZhoXg_",
+        service_id: "YOUR_SERVICE_ID", // Replace with your EmailJS service ID
+        template_id: "YOUR_TEMPLATE_ID", // Replace with your EmailJS template ID
+        user_id: "YOUR_PUBLIC_KEY", // Replace with your EmailJS public key
         template_params: {
           from_name: `${firstName} ${lastName}`,
-          first_name: firstName,
-          last_name: lastName,
           from_email: email,
           phone: phone || "Not provided",
           event_type: eventType || "Not specified",
           services: services.length > 0 ? services.join(", ") : "Not specified",
           message: message,
           to_email: "info@sound360.co.za",
-          reply_to: email,
-          // Additional template variables you can use
-          full_message: `
-Contact Information:
-- Name: ${firstName} ${lastName}
-- Email: ${email}
-- Phone: ${phone || "Not provided"}
-
-Event Details:
-- Event Type: ${eventType || "Not specified"}
-- Services Needed: ${services.length > 0 ? services.join(", ") : "Not specified"}
-
-Message:
-${message}
-
----
-Submitted from Sound360 website contact form
-          `.trim(),
         },
       }),
     })
@@ -64,8 +44,6 @@ Submitted from Sound360 website contact form
         message: "Thank you! Your message has been sent successfully. We'll get back to you within 2 hours.",
       }
     } else {
-      const errorData = await response.text()
-      console.error("EmailJS Error:", errorData)
       throw new Error("Failed to send email")
     }
   } catch (error) {
