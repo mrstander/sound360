@@ -162,7 +162,7 @@ export default function ServicesPage() {
                         <Link href={service.href}>
                           <Button
                             variant="outline"
-                            className="group-hover:bg-sound360 group-hover:text-white group-hover:border-sound360 transition-all duration-300 bg-transparent border-gray-300 w-full"
+                            className="bg-black hover:bg-gray-800 text-white hover:text-white py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                           >
                             Learn More
                           </Button>

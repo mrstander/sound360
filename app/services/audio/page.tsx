@@ -172,7 +172,7 @@ export default function AudioPage() {
                   </div>
 
                   <Link href="/contact">
-                    <Button className="bg-gray-900 hover:bg-sound360-dark text-white px-8 py-3 rounded-full">
+                    <Button className="bg-black hover:bg-gray-800 text-white py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
                       Get Audio Quote
                     </Button>
                   </Link>
