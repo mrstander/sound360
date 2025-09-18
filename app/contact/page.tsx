@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Phone, Mail, MapPin, Clock, MessageCircle, ChevronDown, CheckCircle, AlertCircle } from "lucide-react"
-import { submitContactForm } from "@/app/actions/contact"
 
 // Note: For client components, we need to export metadata from a separate file or use generateMetadata
 // Since this is a client component, we'll handle SEO in the layout or create a wrapper
@@ -80,254 +79,320 @@ export default function ContactPage() {
     setIsSubmitting(true)
     setSubmitResult(null)
 
+    const firstName = formData.get("firstName") as string
+    const lastName = formData.get("lastName") as string
+    const email = formData.get("email") as string
+    const phone = formData.get("phone") as string
+    const eventType = formData.get("eventType") as string
+    const message = formData.get("message") as string
+
+    // Get selected services
+    const services = []
+    if (formData.get("audio")) services.push("Professional Audio")
+    if (formData.get("lighting")) services.push("Stage Lighting")
+    if (formData.get("visual")) services.push("Visual Solutions")
+    if (formData.get("production")) services.push("Event Production")
+
     try {
-      const result = await submitContactForm(formData)
-      setSubmitResult(result)
-
-      if (result.success) {
-        // Reset form on success
-        const form = document.getElementById("contact-form") as HTMLFormElement
-        form?.reset()
+      // Load EmailJS if not already loaded
+      if (typeof window !== "undefined" && !window.emailjs) {
+        const script = document.createElement("script")
+        script.src = "https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"
+        document.head.appendChild(script)
+        
+        await new Promise((resolve) => {
+          script.onload = () => {
+            window.emailjs.init("bg5HZVouxshZhoXg_")
+            resolve(true)
+          }
+        })
       }
-    } catch (error) {
+
+      // Send email using EmailJS
+      const result = await window.emailjs.send(
+        "service_lymqut7",
+        "template_grwciu9",
+        {
+          from_name: `${firstName} ${lastName}`,
+          first_name: firstName,
+          last_name: lastName,
+          from_email: email,
+          phone: phone || "Not provided",
+          event_type: eventType || "Not specified",
+          services: services.length > 0 ? services.join(", ") : "Not specified",
+          message: message,
+          to_email: "info@sound360.co.za",
+          reply_to: email,
+          full_message: `
+Contact Information:
+- Name: ${firstName} ${lastName}
+- Email: ${email}
+- Phone: ${phone || "Not provided"}
+
+Event Details:
+- Event Type: ${eventType || "Not specified"}
+- Services Needed: ${services.length > 0 ? services.join(", ") : "Not specified"}
+
+Message:
+${message}
+
+---
+Submitted from Sound360 website contact form
+        `.trim(),
+      }
+    )
+
+    if (result.status === 200) {
       setSubmitResult({
-        success: false,
-        message: "An unexpected error occurred. Please try again.",
+        success: true,
+        message: "Thank you! Your message has been sent successfully. We'll get back to you within 2 hours.",
       })
-    } finally {
-      setIsSubmitting(false)
+      // Reset form
+      const form = document.getElementById("contact-form") as HTMLFormElement
+      form?.reset()
+    } else {
+      throw new Error("Failed to send email")
     }
+  } catch (error) {
+    console.error("Error sending email:", error)
+    setSubmitResult({
+      success: false,
+      message:
+        "Sorry, there was an error sending your message. Please try again or contact us directly at info@sound360.co.za",
+    })
+  } finally {
+    setIsSubmitting(false)
   }
+}
 
-  return (
-    <>
-      <Header />
-      <main className="pt-32">
-        {/* Hero Section */}
-        <section className="py-24 bg-black text-white relative overflow-hidden">
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl" />
-            <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl" />
+return (
+  <>
+    <Header />
+    <main className="pt-32">
+      {/* Hero Section */}
+      <section className="py-24 bg-black text-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl" />
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl" />
+        </div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-4xl mx-auto text-center">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
+              Get in <span className="text-gray-400">Touch</span>
+            </h1>
+            <p className="text-xl md:text-2xl text-white/90 leading-relaxed">
+              Ready to make your event unforgettable? Contact us today for a free consultation and custom quote.
+            </p>
           </div>
-          <div className="container mx-auto px-4 relative z-10">
-            <div className="max-w-4xl mx-auto text-center">
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
-                Get in <span className="text-gray-400">Touch</span>
-              </h1>
-              <p className="text-xl md:text-2xl text-white/90 leading-relaxed">
-                Ready to make your event unforgettable? Contact us today for a free consultation and custom quote.
-              </p>
-            </div>
-          </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Contact Section */}
-        <section className="py-24 bg-white">
-          <div className="container mx-auto px-4">
-            <div className="max-w-6xl mx-auto">
-              <div className="grid lg:grid-cols-2 gap-16">
-                {/* Contact Form */}
-                <div className="bg-gray-50 rounded-3xl p-8 shadow-xl border border-gray-100">
-                  <h2 className="text-3xl font-bold text-black mb-8">Send us a Message</h2>
+      {/* Contact Section */}
+      <section className="py-24 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-16">
+              {/* Contact Form */}
+              <div className="bg-gray-50 rounded-3xl p-8 shadow-xl border border-gray-100">
+                <h2 className="text-3xl font-bold text-black mb-8">Send us a Message</h2>
 
-                  {/* Success/Error Message */}
-                  {submitResult && (
-                    <div
-                      className={`mb-6 p-4 rounded-xl flex items-center ${
-                        submitResult.success
-                          ? "bg-green-50 border border-green-200 text-green-800"
-                          : "bg-red-50 border border-red-200 text-red-800"
-                      }`}
-                    >
-                      {submitResult.success ? (
-                        <CheckCircle className="w-5 h-5 mr-3 flex-shrink-0" />
-                      ) : (
-                        <AlertCircle className="w-5 h-5 mr-3 flex-shrink-0" />
-                      )}
-                      <p className="text-sm">{submitResult.message}</p>
-                    </div>
-                  )}
+                {/* Success/Error Message */}
+                {submitResult && (
+                  <div
+                    className={`mb-6 p-4 rounded-xl flex items-center ${
+                      submitResult.success
+                        ? "bg-green-50 border border-green-200 text-green-800"
+                        : "bg-red-50 border border-red-200 text-red-800"
+                    }`}
+                  >
+                    {submitResult.success ? (
+                      <CheckCircle className="w-5 h-5 mr-3 flex-shrink-0" />
+                    ) : (
+                      <AlertCircle className="w-5 h-5 mr-3 flex-shrink-0" />
+                    )}
+                    <p className="text-sm">{submitResult.message}</p>
+                  </div>
+                )}
 
-                  <form id="contact-form" action={handleSubmit} className="space-y-6">
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <div>
-                        <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
-                          First Name *
-                        </label>
-                        <Input
-                          id="firstName"
-                          name="firstName"
-                          type="text"
-                          required
-                          className="w-full rounded-xl border-gray-300 focus:border-black focus:ring-black bg-white"
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">
-                          Last Name *
-                        </label>
-                        <Input
-                          id="lastName"
-                          name="lastName"
-                          type="text"
-                          required
-                          className="w-full rounded-xl border-gray-300 focus:border-black focus:ring-black bg-white"
-                        />
-                      </div>
-                    </div>
-
+                <form id="contact-form" onSubmit={(e) => { e.preventDefault(); handleSubmit(new FormData(e.target)); }} className="space-y-6">
+                  <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                        Email Address *
+                      <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
+                        First Name *
                       </label>
                       <Input
-                        id="email"
-                        name="email"
-                        type="email"
+                        id="firstName"
+                        name="firstName"
+                        type="text"
                         required
                         className="w-full rounded-xl border-gray-300 focus:border-black focus:ring-black bg-white"
                       />
                     </div>
-
                     <div>
-                      <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                        Phone Number
+                      <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">
+                        Last Name *
                       </label>
                       <Input
-                        id="phone"
-                        name="phone"
-                        type="tel"
+                        id="lastName"
+                        name="lastName"
+                        type="text"
+                        required
                         className="w-full rounded-xl border-gray-300 focus:border-black focus:ring-black bg-white"
                       />
                     </div>
+                  </div>
 
-                    <div>
-                      <label htmlFor="eventType" className="block text-sm font-medium text-gray-700 mb-2">
-                        Event Type
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                      Email Address *
+                    </label>
+                    <Input
+                      id="email"
+                      name="email"
+                      type="email"
+                      required
+                      className="w-full rounded-xl border-gray-300 focus:border-black focus:ring-black bg-white"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                      Phone Number
+                    </label>
+                    <Input
+                      id="phone"
+                      name="phone"
+                      type="tel"
+                      className="w-full rounded-xl border-gray-300 focus:border-black focus:ring-black bg-white"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="eventType" className="block text-sm font-medium text-gray-700 mb-2">
+                      Event Type
+                    </label>
+                    <select
+                      id="eventType"
+                      name="eventType"
+                      className="w-full rounded-xl border-gray-300 focus:border-black focus:ring-black p-3 bg-white"
+                    >
+                      <option value="">Select Event Type</option>
+                      <option value="corporate">Corporate Event</option>
+                      <option value="wedding">Wedding</option>
+                      <option value="concert">Concert/Festival</option>
+                      <option value="conference">Conference</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label htmlFor="services" className="block text-sm font-medium text-gray-700 mb-2">
+                      Services Needed
+                    </label>
+                    <div className="grid grid-cols-2 gap-3">
+                      <label className="flex items-center">
+                        <input type="checkbox" name="audio" className="mr-2" />
+                        <span className="text-sm">Professional Audio</span>
                       </label>
-                      <select
-                        id="eventType"
-                        name="eventType"
-                        className="w-full rounded-xl border-gray-300 focus:border-black focus:ring-black p-3 bg-white"
-                      >
-                        <option value="">Select Event Type</option>
-                        <option value="corporate">Corporate Event</option>
-                        <option value="wedding">Wedding</option>
-                        <option value="concert">Concert/Festival</option>
-                        <option value="conference">Conference</option>
-                        <option value="other">Other</option>
-                      </select>
+                      <label className="flex items-center">
+                        <input type="checkbox" name="lighting" className="mr-2" />
+                        <span className="text-sm">Stage Lighting</span>
+                      </label>
+                      <label className="flex items-center">
+                        <input type="checkbox" name="visual" className="mr-2" />
+                        <span className="text-sm">Visual Solutions</span>
+                      </label>
+                      <label className="flex items-center">
+                        <input type="checkbox" name="production" className="mr-2" />
+                        <span className="text-sm">Event Production</span>
+                      </label>
                     </div>
+                  </div>
 
-                    <div>
-                      <label htmlFor="services" className="block text-sm font-medium text-gray-700 mb-2">
-                        Services Needed
-                      </label>
-                      <div className="grid grid-cols-2 gap-3">
-                        <label className="flex items-center">
-                          <input type="checkbox" name="audio" className="mr-2" />
-                          <span className="text-sm">Professional Audio</span>
-                        </label>
-                        <label className="flex items-center">
-                          <input type="checkbox" name="lighting" className="mr-2" />
-                          <span className="text-sm">Stage Lighting</span>
-                        </label>
-                        <label className="flex items-center">
-                          <input type="checkbox" name="visual" className="mr-2" />
-                          <span className="text-sm">Visual Solutions</span>
-                        </label>
-                        <label className="flex items-center">
-                          <input type="checkbox" name="production" className="mr-2" />
-                          <span className="text-sm">Event Production</span>
-                        </label>
+                  <div>
+                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                      Message *
+                    </label>
+                    <Textarea
+                      id="message"
+                      name="message"
+                      required
+                      rows={4}
+                      className="w-full rounded-xl border-gray-300 focus:border-black focus:ring-black bg-white"
+                      placeholder="Tell us about your event requirements, venue details, expected attendance, and any specific needs..."
+                    />
+                  </div>
+
+                  <Button
+                    type="submit"
+                    size="lg"
+                    disabled={isSubmitting}
+                    className="w-full bg-black hover:bg-gray-800 text-white py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isSubmitting ? "Sending Message..." : "Send Message"}
+                  </Button>
+                </form>
+              </div>
+
+              {/* Contact Information */}
+              <div className="space-y-8">
+                <div className="bg-black rounded-3xl p-8 text-white">
+                  <h3 className="text-2xl font-bold mb-6">Contact Information</h3>
+                  <div className="space-y-6">
+                    <div className="flex items-start space-x-4">
+                      <div className="bg-white/20 p-3 rounded-xl">
+                        <Phone className="w-6 h-6" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold mb-1">Phone</h4>
+                        <p className="text-white/90">067 111 4362</p>
                       </div>
                     </div>
 
-                    <div>
-                      <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                        Message *
-                      </label>
-                      <Textarea
-                        id="message"
-                        name="message"
-                        required
-                        rows={4}
-                        className="w-full rounded-xl border-gray-300 focus:border-black focus:ring-black bg-white"
-                        placeholder="Tell us about your event requirements, venue details, expected attendance, and any specific needs..."
-                      />
+                    <div className="flex items-start space-x-4">
+                      <div className="bg-white/20 p-3 rounded-xl">
+                        <Mail className="w-6 h-6" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold mb-1">Email</h4>
+                        <p className="text-white/90">info@sound360.co.za</p>
+                        <p className="text-sm text-white/70">We'll respond within 2 hours</p>
+                      </div>
                     </div>
 
-                    <Button
-                      type="submit"
-                      size="lg"
-                      disabled={isSubmitting}
-                      className="w-full bg-black hover:bg-gray-800 text-white py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      {isSubmitting ? "Sending Message..." : "Send Message"}
-                    </Button>
-                  </form>
+                    <div className="flex items-start space-x-4">
+                      <div className="bg-white/20 p-3 rounded-xl">
+                        <MapPin className="w-6 h-6" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold mb-1">Service Area</h4>
+                        <p className="text-white/90">Cape Town</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start space-x-4">
+                      <div className="bg-white/20 p-3 rounded-xl">
+                        <Clock className="w-6 h-6" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold mb-1">Business Hours</h4>
+                        <p className="text-white/90">Mon - Fri: 8:00 AM - 5:00 PM</p>
+                        <p className="text-sm text-white/70">Weekend events by appointment</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
-                {/* Contact Information */}
-                <div className="space-y-8">
-                  <div className="bg-black rounded-3xl p-8 text-white">
-                    <h3 className="text-2xl font-bold mb-6">Contact Information</h3>
-                    <div className="space-y-6">
-                      <div className="flex items-start space-x-4">
-                        <div className="bg-white/20 p-3 rounded-xl">
-                          <Phone className="w-6 h-6" />
-                        </div>
-                        <div>
-                          <h4 className="font-semibold mb-1">Phone</h4>
-                          <p className="text-white/90">067 111 4362</p>
-                        </div>
-                      </div>
-
-                      <div className="flex items-start space-x-4">
-                        <div className="bg-white/20 p-3 rounded-xl">
-                          <Mail className="w-6 h-6" />
-                        </div>
-                        <div>
-                          <h4 className="font-semibold mb-1">Email</h4>
-                          <p className="text-white/90">info@sound360.co.za</p>
-                          <p className="text-sm text-white/70">We'll respond within 2 hours</p>
-                        </div>
-                      </div>
-
-                      <div className="flex items-start space-x-4">
-                        <div className="bg-white/20 p-3 rounded-xl">
-                          <MapPin className="w-6 h-6" />
-                        </div>
-                        <div>
-                          <h4 className="font-semibold mb-1">Service Area</h4>
-                          <p className="text-white/90">Cape Town</p>
-                        </div>
-                      </div>
-
-                      <div className="flex items-start space-x-4">
-                        <div className="bg-white/20 p-3 rounded-xl">
-                          <Clock className="w-6 h-6" />
-                        </div>
-                        <div>
-                          <h4 className="font-semibold mb-1">Business Hours</h4>
-                          <p className="text-white/90">Mon - Fri: 8:00 AM - 5:00 PM</p>
-                          <p className="text-sm text-white/70">Weekend events by appointment</p>
-                        </div>
-                      </div>
-                    </div>
+                {/* Quick Response Promise */}
+                <div className="bg-gray-100 border border-gray-200 rounded-3xl p-8">
+                  <div className="flex items-center mb-4">
+                    <MessageCircle className="w-8 h-8 text-black mr-3" />
+                    <h4 className="text-xl font-bold text-black">Quick Response Guarantee</h4>
                   </div>
-
-                  {/* Quick Response Promise */}
-                  <div className="bg-gray-100 border border-gray-200 rounded-3xl p-8">
-                    <div className="flex items-center mb-4">
-                      <MessageCircle className="w-8 h-8 text-black mr-3" />
-                      <h4 className="text-xl font-bold text-black">Quick Response Guarantee</h4>
-                    </div>
-                    <p className="text-gray-700 leading-relaxed">
-                      We understand that event planning is time-sensitive. That's why we guarantee a response to all
-                      inquiries within 2 hours during business hours, and within 24 hours on weekends.
-                    </p>
-                  </div>
+                  <p className="text-gray-700 leading-relaxed">
+                    We understand that event planning is time-sensitive. That's why we guarantee a response to all
+                    inquiries within 2 hours during business hours, and within 24 hours on weekends.
+                  </p>
                 </div>
               </div>
             </div>
@@ -353,4 +418,11 @@ export default function ContactPage() {
       <Footer />
     </>
   )
+}
+
+// Extend the Window interface to include emailjs
+declare global {
+  interface Window {
+    emailjs?: any
+  }
 }
