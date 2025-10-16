@@ -14,21 +14,21 @@ export function HeroSection() {
     {
       id: 1,
       image: "/images/hero1.webp",
-      title: "Sound360", // Primary text - always shown
+      title: "SOUND360", // Primary text - always shown
       subtitle: "",
       description: "",
     },
     {
       id: 2,
       image: "/images/hero2.webp",
-      title: "Sound360", // Primary text - always shown
+      title: "SOUND360", // Primary text - always shown
       subtitle: "",
       description: "",
     },
     {
       id: 3,
       image: "/images/dark-music-background-with-playing-dj-photo.jpg",
-      title: "Sound360", // Primary text - always shown
+      title: "SOUND360", // Primary text - always shown
       subtitle: "",
       description: "",
     },
@@ -36,7 +36,7 @@ export function HeroSection() {
 
   // Primary/default content
   const primaryContent = {
-    title: "Sound360",
+    title: "SOUND360",
     subtitle: "",
     description: "",
   }

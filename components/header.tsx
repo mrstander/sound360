@@ -79,8 +79,8 @@ export function Header() {
             <Image
               src="/images/sound360-logo.png"
               alt="Sound360 Logo"
-              width={150}
-              height={40}
+              width={250}
+              height={100}
               className="transition-all duration-300"
               priority
             />

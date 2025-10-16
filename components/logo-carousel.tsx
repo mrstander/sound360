@@ -68,8 +68,8 @@ export function LogoCarousel() {
             {infiniteLogos.map((logo, index) => (
               <div
                 key={`${logo.name}-${index}`}
-                className="flex-shrink-0 bg-white rounded-2xl p-6 hover:bg-gray-50 transition-all duration-300 hover:scale-105 flex items-center justify-center min-h-[100px]"
-                style={{ minWidth: "200px" }}
+                className="flex-shrink-0 bg-white rounded-2xl p-6 hover:bg-gray-50 transition-all duration-500 hover:scale-105 flex items-center justify-center min-h-[100px]"
+                style={{ minWidth: "500px" }}
               >
                 <Image
                   src={logo.src || "/placeholder.svg"}

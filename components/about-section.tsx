@@ -9,7 +9,7 @@ export function AboutSection() {
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black mb-6">About Sound360</h2>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black mb-6">About SOUND360</h2>
             <p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
               Cape Town's trusted experts in audio, lighting, and visual solutions - powering unforgettable events with
               advanced technology and proven skill.
@@ -44,7 +44,7 @@ export function AboutSection() {
               </div>
               <h3 className="text-2xl font-bold text-black mb-4">Trusted by Top Brands</h3>
               <p className="text-gray-600 leading-relaxed mb-4">
-                From corporate events to live shoes, Sound360 is the partner behind successful productions across south
+                From corporate events to live shows, Sound360 is the partner behind successful productions across south
                 africa.
               </p>
             </div>
