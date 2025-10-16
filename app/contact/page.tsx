@@ -1,15 +1,29 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
+import { useFormStatus } from "react-dom"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Phone, Mail, MapPin, Clock, MessageCircle, ChevronDown, CheckCircle, AlertCircle } from "lucide-react"
+import { sendContactEmail } from "@/app/actions/send-email"
 
-// Note: For client components, we need to export metadata from a separate file or use generateMetadata
-// Since this is a client component, we'll handle SEO in the layout or create a wrapper
+function SubmitButton() {
+  const { pending } = useFormStatus()
+
+  return (
+    <Button
+      type="submit"
+      size="lg"
+      disabled={pending}
+      className="w-full bg-black hover:bg-gray-800 text-white py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+    >
+      {pending ? "Sending Message..." : "Send Message"}
+    </Button>
+  )
+}
 
 function FAQSection() {
   const [openItems, setOpenItems] = useState<number[]>([])
@@ -38,6 +52,16 @@ function FAQSection() {
       question: "Can the setup be designed around my event?",
       answer:
         "Yes, every event is unique. We tailor our sound, lighting, staging, and AV solutions to match your vision, venue, and audience. Our team works closely with you (and your planner if applicable) to design a setup that's perfectly aligned with your event.",
+    },
+    {
+      question: "How much will it cost?",
+      answer:
+        "Each event is unique and we will work within your budget,however, we are a premium AV rental company and therefore are not trying to be the cheapest, but rather the best",
+    },
+    {
+      question: "Can you provide special effects like fog machines or LED dance floors",
+      answer:
+        "Yes! We offer fog machines,LED dance floors,spark machines, and other special effects to enhance your event's atmosphere.Let us know your vision,and we'll make it happen!",
     },
   ]
 
@@ -72,130 +96,17 @@ function FAQSection() {
 }
 
 export default function ContactPage() {
-  const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitResult, setSubmitResult] = useState<{ success: boolean; message: string } | null>(null)
 
-  useEffect(() => {
-    // Preload EmailJS script to avoid multiple script loading
-    if (typeof window !== "undefined" && !window.emailjs && !document.querySelector('script[src*="emailjs"]')) {
-      const script = document.createElement("script")
-      script.src = "https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"
-      script.async = true
-      script.onload = () => {
-        if (window.emailjs) {
-          window.emailjs.init("bg5HZVouxshZhoXg_")
-        }
-      }
-      document.head.appendChild(script)
-    }
-  }, [])
-
   async function handleSubmit(formData: FormData) {
-    setIsSubmitting(true)
     setSubmitResult(null)
+    const result = await sendContactEmail(formData)
+    setSubmitResult(result)
 
-    const firstName = formData.get("firstName") as string
-    const lastName = formData.get("lastName") as string
-    const email = formData.get("email") as string
-    const phone = formData.get("phone") as string
-    const eventType = formData.get("eventType") as string
-    const message = formData.get("message") as string
-
-    // Get selected services
-    const services = []
-    if (formData.get("audio")) services.push("Professional Audio")
-    if (formData.get("lighting")) services.push("Stage Lighting")
-    if (formData.get("visual")) services.push("Visual Solutions")
-    if (formData.get("production")) services.push("Event Production")
-
-    try {
-      // Check if EmailJS is already loaded, if not load it
-      if (typeof window !== "undefined" && !window.emailjs) {
-        // Check if script is already being loaded
-        const existingScript = document.querySelector('script[src*="emailjs"]')
-        if (!existingScript) {
-          const script = document.createElement("script")
-          script.src = "https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"
-          script.async = true
-
-          await new Promise((resolve, reject) => {
-            script.onload = () => {
-              if (window.emailjs) {
-                window.emailjs.init("bg5HZVouxshZhoXg_")
-                resolve(true)
-              } else {
-                reject(new Error("EmailJS failed to load"))
-              }
-            }
-            script.onerror = () => reject(new Error("Failed to load EmailJS script"))
-            document.head.appendChild(script)
-          })
-        } else {
-          // Script exists but EmailJS might not be initialized
-          await new Promise((resolve) => {
-            const checkEmailJS = () => {
-              if (window.emailjs) {
-                window.emailjs.init("bg5HZVouxshZhoXg_")
-                resolve(true)
-              } else {
-                setTimeout(checkEmailJS, 100)
-              }
-            }
-            checkEmailJS()
-          })
-        }
-      }
-
-      // Send email using EmailJS
-      const result = await window.emailjs.send("service_lymqut7", "template_grwciu9", {
-        from_name: `${firstName} ${lastName}`,
-        first_name: firstName,
-        last_name: lastName,
-        from_email: email,
-        phone: phone || "Not provided",
-        event_type: eventType || "Not specified",
-        services: services.length > 0 ? services.join(", ") : "Not specified",
-        message: message,
-        to_email: "info@sound360.co.za",
-        reply_to: email,
-        full_message: `
-Contact Information:
-- Name: ${firstName} ${lastName}
-- Email: ${email}
-- Phone: ${phone || "Not provided"}
-
-Event Details:
-- Event Type: ${eventType || "Not specified"}
-- Services Needed: ${services.length > 0 ? services.join(", ") : "Not specified"}
-
-Message:
-${message}
-
----
-Submitted from Sound360 website contact form
-        `.trim(),
-      })
-
-      if (result.status === 200) {
-        setSubmitResult({
-          success: true,
-          message: "Thank you! Your message has been sent successfully. We'll get back to you within 2 hours.",
-        })
-        // Reset form
-        const form = document.getElementById("contact-form") as HTMLFormElement
-        form?.reset()
-      } else {
-        throw new Error("Failed to send email")
-      }
-    } catch (error) {
-      console.error("Error sending email:", error)
-      setSubmitResult({
-        success: false,
-        message:
-          "Sorry, there was an error sending your message. Please try again or contact us directly at info@sound360.co.za",
-      })
-    } finally {
-      setIsSubmitting(false)
+    // Reset form on success
+    if (result.success) {
+      const form = document.getElementById("contact-form") as HTMLFormElement
+      form?.reset()
     }
   }
 
@@ -248,14 +159,7 @@ Submitted from Sound360 website contact form
                     </div>
                   )}
 
-                  <form
-                    id="contact-form"
-                    onSubmit={(e) => {
-                      e.preventDefault()
-                      handleSubmit(new FormData(e.currentTarget))
-                    }}
-                    className="space-y-6"
-                  >
+                  <form id="contact-form" action={handleSubmit} className="space-y-6">
                     <div className="grid md:grid-cols-2 gap-6">
                       <div>
                         <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
@@ -322,6 +226,7 @@ Submitted from Sound360 website contact form
                         <option value="wedding">Wedding</option>
                         <option value="concert">Concert/Festival</option>
                         <option value="conference">Conference</option>
+                        <option value="private">Private Events </option>
                         <option value="other">Other</option>
                       </select>
                     </div>
@@ -364,14 +269,7 @@ Submitted from Sound360 website contact form
                       />
                     </div>
 
-                    <Button
-                      type="submit"
-                      size="lg"
-                      disabled={isSubmitting}
-                      className="w-full bg-black hover:bg-gray-800 text-white py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      {isSubmitting ? "Sending Message..." : "Send Message"}
-                    </Button>
+                    <SubmitButton />
                   </form>
                 </div>
 
@@ -418,6 +316,7 @@ Submitted from Sound360 website contact form
                         <div>
                           <h4 className="font-semibold mb-1">Business Hours</h4>
                           <p className="text-white/90">8:00 AM - 5:00 PM</p>
+                         
                         </div>
                       </div>
                     </div>

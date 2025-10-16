@@ -125,7 +125,8 @@ export function HeroSection() {
           <Link href="/contact">
             <Button
               size="lg"
-              className="bg-sound360 text-white hover:bg-sound360-dark px-8 py-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-105 group"
+              variant="outline"
+              className="border-2 border-white text-white hover:bg-sound360 hover:text-white hover:border-sound360 px-8 py-4 rounded-xl bg-transparent backdrop-blur-sm transition-all duration-300 hover:scale-105 group"
             >
               Get Free Quote
               <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />

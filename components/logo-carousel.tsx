@@ -50,7 +50,7 @@ export function LogoCarousel() {
   ]
 
   // Triple the logos for seamless infinite scroll
-  const infiniteLogos = [...logos, ...logos, ...logos]
+  const infiniteLogos = [...logos, ...logos]
 
   return (
     <section className="py-5 bg-sound360 overflow-hidden">
@@ -68,8 +68,8 @@ export function LogoCarousel() {
             {infiniteLogos.map((logo, index) => (
               <div
                 key={`${logo.name}-${index}`}
-                className="flex-shrink-0 bg-white rounded-2xl p-6 hover:bg-gray-50 transition-all duration-500 hover:scale-105 flex items-center justify-center min-h-[100px]"
-                style={{ minWidth: "500px" }}
+                className="flex-shrink-0 bg-white rounded-2xl p-6  transition-all duration-100 hover:scale-105 flex items-center justify-center min-h-[50px]"
+                style={{ minWidth: "50px" }}
               >
                 <Image
                   src={logo.src || "/placeholder.svg"}

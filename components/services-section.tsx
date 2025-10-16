@@ -3,13 +3,13 @@
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import Link from "next/link"
-import { Lordicon } from "./lordicon"
+
 
 export function ServicesSection() {
   const services = [
     {
       name: "Professional Audio",
-      iconSrc: "https://cdn.lordicon.com/jectmwqf.json",
+      
       description: "Crystal-clear sound systems, mixing consoles, and acoustic solutions for any venue size.",
       features: ["Digital Console Mixing", "High quality Audio", "Wireless Microphones", "Recording & Playback"],
       image: "/images/audio.jpeg",
@@ -17,7 +17,7 @@ export function ServicesSection() {
     },
     {
       name: "Stage Lighting",
-      iconSrc: "https://cdn.lordicon.com/fkdzyfle.json",
+      
       description: "Dynamic lighting design that transforms your event with spectacular visual effects.",
       features: ["LED Moving Lights", "Intelligent Fixtures", "Haze & Fog Effects", "DMX Control Systems"],
       image: "/images/concert-crowd-lighting.png",
@@ -25,7 +25,7 @@ export function ServicesSection() {
     },
     {
       name: "Visual Solutions",
-      iconSrc: "https://cdn.lordicon.com/eszyyflr.json",
+      
       description: "High-resolution LED displays and projection systems for impactful visual presentations.",
       features: ["LED Video Walls", "Projection Mapping", "Live Camera Systems", "Content Management"],
       image: "/images/visual-solutions.png",
@@ -33,7 +33,7 @@ export function ServicesSection() {
     },
     {
       name: "Event Production",
-      iconSrc: "https://cdn.lordicon.com/qhviklyi.json",
+      
       description: "Complete event production including rigging, trussing, livestreaming, and power solutions.",
       features: ["Rigging & Trussing", "Livestreaming", "Power Distribution", "Project Management"],
       image: "/images/wedding-venue-projection.png",
@@ -41,10 +41,10 @@ export function ServicesSection() {
     },
     {
       name: "Dance Floor",
-      iconSrc: "https://cdn.lordicon.com/mecwbjnp.json",
+      
       description:
         "Create the perfect space with premium flooring solutions to elevate your exhibition or dance the night away, often enhanced by lighting and effects to create the desired atmosphere.",
-      features: [""],
+      features: ["LED Dance Floors", "Black and White", "Glossy Dance Floors", "Portable Dance Floors", "Underflooring"],
       image: "/images/visual-solutions.png",
       href: "/services/dancefloor",
     },
@@ -80,14 +80,7 @@ export function ServicesSection() {
                   />
                   <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors duration-300" />
                   <div className="absolute top-4 left-4">
-                    <div className="bg-sound360/20 backdrop-blur-sm w-16 h-16 rounded-2xl flex items-center justify-center">
-                      <Lordicon
-                        src={service.iconSrc}
-                        trigger="hover"
-                        colors="primary:#ffffff,secondary:#0084d1"
-                        size={32}
-                      />
-                    </div>
+                    
                   </div>
                 </div>
 
@@ -131,15 +124,10 @@ export function ServicesSection() {
                   {/* Text Content - Left Side */}
                   <div className="p-12 text-center lg:text-left flex flex-col justify-center">
                     <div className="bg-sound360 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 mx-auto lg:mx-0">
-                      <Lordicon
-                        src={services[4].iconSrc}
-                        trigger="hover"
-                        colors="primary:#ffffff,secondary:#0084d1"
-                        size={32}
-                      />
+                     
                     </div>
                     <h3 className="text-3xl md:text-4xl font-bold text-black mb-6">{services[4].name}</h3>
-                    <p className="text-xl text-gray-600 mb-8 leading-relaxed">{services[4].description}</p>
+                    <p className="text-gray-600 mb-6 leading-relaxed">{services[4].description}</p>
 
                     {/* Features */}
                     {services[4].features[0] && (
@@ -196,12 +184,7 @@ export function ServicesSection() {
                       <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors duration-300" />
                       <div className="absolute top-4 left-4">
                         <div className="bg-sound360/20 backdrop-blur-sm w-16 h-16 rounded-2xl flex items-center justify-center">
-                          <Lordicon
-                            src={services[4].iconSrc}
-                            trigger="hover"
-                            colors="primary:#ffffff,secondary:#0084d1"
-                            size={32}
-                          />
+                         
                         </div>
                       </div>
                     </div>
@@ -229,7 +212,7 @@ export function ServicesSection() {
                       <Link href={services[4].href}>
                         <Button
                         
-                          className="w-full bg-black hover:bg-gray-800 text-white py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                          className="w-full bg-black hover:bg-gray-800 text-white py-4 rounded-xl shadow-lg hover:text-white hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                           Learn More
                         </Button>

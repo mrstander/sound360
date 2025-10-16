@@ -80,7 +80,7 @@ export default function VisualPage() {
                     <Monitor className="w-8 h-8 text-white" />
                   </div>
                   <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">Visual Solutions</h2>
-                  <p className="text-xl text-gray-600 mb-6 leading-relaxed">
+                  <p className="text-gray-700 mb-6 leading-relaxed">
                     High-resolution LED displays and projection systems for impactful visual presentations.
                   </p>
                   <p className="text-gray-700 mb-8 leading-relaxed">

@@ -36,7 +36,7 @@ export function WhyChooseUs() {
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">Why Choose Sound360?</h2>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">Why Choose SOUND360</h2>
             <p className="text-xl md:text-2xl text-white/90 max-w-4xl mx-auto leading-relaxed">
               We don't just provide equipment – we deliver complete peace of mind with professional service that exceeds
               expectations every time.

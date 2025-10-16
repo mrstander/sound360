@@ -69,7 +69,7 @@ export default function ServicesPage() {
       icon: Lightbulb,
       description: "Dynamic lighting design that transforms your event with spectacular visual effects.",
       features: ["LED Moving Lights", "Intelligent Fixtures", "Haze & Fog Effects", "DMX Control Systems"],
-      image: "/images/rigging-trussing-setup.png",
+      image: "/images/hero2.webp",
       href: "/services/lighting",
       details:
         "Create the perfect atmosphere with our cutting-edge lighting solutions, from subtle ambiance to dramatic stage productions.",
@@ -99,7 +99,7 @@ export default function ServicesPage() {
       icon: Settings,
       description:
         "Create the perfect space with flooring to elevate your exhibition or dance the night away, often enhanced by lighting and effects to create the desired atmosphere.",
-      features: [""],
+      features: ["LED Dance Floors", "Black and White", "Glossy Dance Floors", "Portable Dance Floors", "Underflooring"],
       image: "/images/visual-solutions.png",
       href: "/services/dancefloor",
       details: "",
@@ -147,7 +147,7 @@ export default function ServicesPage() {
                           <Icon className="w-8 h-8 text-white" />
                         </div>
                         <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">{service.name}</h2>
-                        <p className="text-xl text-gray-600 mb-6 leading-relaxed">{service.description}</p>
+                        <p className="text-gray-600 mb-6 leading-relaxed">{service.description}</p>
                         <p className="text-gray-700 mb-8 leading-relaxed">{service.details}</p>
 
                         <div className="grid md:grid-cols-2 gap-4 mb-8">

@@ -91,35 +91,43 @@ export function Header() {
             {navItems.map((item) => (
               <div key={item.name} className="relative">
                 {item.hasDropdown ? (
-                  <div
-                    className="relative group"
-                    onMouseEnter={() => setIsServicesOpen(true)}
-                    onMouseLeave={() => setIsServicesOpen(false)}
-                  >
-                    <Link
-                      href={item.href}
-                      className={`font-medium transition-all duration-200 hover:scale-105 flex items-center ${
-                        isHomePage && !isScrolled
-                          ? "text-white/90 hover:text-sound360"
-                          : "text-gray-700 hover:text-sound360"
-                      }`}
+                  <div className="relative">
+                    {/* Dropdown Wrapper keeps hover active */}
+                    <div
+                      onMouseEnter={() => setIsServicesOpen(true)}
+                      onMouseLeave={() => setIsServicesOpen(false)}
                     >
-                      {item.name}
-                      <ChevronDown className="ml-1 w-4 h-4" />
-                    </Link>
-                    {isServicesOpen && (
-                      <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-gray-200 py-4 z-50">
-                        {services.map((service) => (
-                          <Link
-                            key={service.name}
-                            href={service.href}
-                            className="block px-6 py-3 text-gray-700 hover:text-sound360 hover:bg-gray-50 transition-colors"
-                          >
-                            {service.name}
-                          </Link>
-                        ))}
-                      </div>
-                    )}
+                      <Link
+                        href={item.href}
+                        className={`font-medium transition-all duration-200 hover:scale-105 flex items-center ${
+                          isHomePage && !isScrolled
+                            ? "text-white/90 hover:text-sound360"
+                            : "text-gray-700 hover:text-sound360"
+                        }`}
+                      >
+                        {item.name}
+                        <ChevronDown className="ml-1 w-4 h-4" />
+                      </Link>
+
+                      {/* Dropdown Menu */}
+                      {isServicesOpen && (
+                        <div
+                          className="absolute top-full left-0 mt-1 w-64 bg-white rounded-2xl shadow-xl border border-gray-200 py-4 z-50"
+                          onMouseEnter={() => setIsServicesOpen(true)}
+                          onMouseLeave={() => setIsServicesOpen(false)}
+                        >
+                          {services.map((service) => (
+                            <Link
+                              key={service.name}
+                              href={service.href}
+                              className="block px-6 py-3 text-gray-700 hover:text-sound360 hover:bg-gray-50 transition-colors"
+                            >
+                              {service.name}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   </div>
                 ) : (
                   <Link
@@ -169,7 +177,7 @@ export function Header() {
                         <Link
                           key={service.name}
                           href={service.href}
-                          className="text-gray-600 hover:text-sound360 py-1 transition-colors block text-sm"
+                          className="text-gray-600 py-1 transition-colors block text-sm"
                           onClick={() => setIsMenuOpen(false)}
                         >
                           {service.name}

@@ -6,7 +6,7 @@ import Image from "next/image"
 import Link from "next/link"
 
 export default function DancefloorPage() {
-  const features = ["LED Dance Floors", "Modular Systems", "Lighting Integration", "Sound Calibration"]
+  const features = ["LED Dance Floors", "Black and White", "Glossy Dance Floors", "Portable Dance Floors", "Underflooring"]
 
   const galleryImages = [
     {
@@ -80,11 +80,11 @@ export default function DancefloorPage() {
                     <Volume2 className="w-8 h-8 text-white" />
                   </div>
                   <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">Dance Floor</h2>
-                  <p className="text-xl text-gray-600 mb-6 leading-relaxed">
+                  <p className="text-gray-600 mb-6 leading-relaxed">
                     Create the perfect space with flooring to elevate your exhibition or dance the night away, often
                     enhanced by lighting and effects to create the desired atmosphere.
                   </p>
-                  <p className="text-gray-700 mb-8 leading-relaxed">
+                  <p className="text-gray-700 mb-6 leading-relaxed">
                     Our premium dance floor solutions combine professional flooring with integrated lighting and sound
                     systems to create unforgettable experiences.
                   </p>

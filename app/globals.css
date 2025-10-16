@@ -148,12 +148,14 @@
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-33.333%);
+    transform: translateX(-50%);
   }
 }
 
 .animate-scroll-left {
-  animation: scroll-left 20s linear infinite;
+ display: flex;
+  width: max-content;
+  animation: scroll-left 25s linear infinite;
 }
 
 /* Pause animation on hover */
@@ -256,11 +258,6 @@ button:hover svg:not(:disabled),
   animation: button-bounce 0.5s ease-in-out;
 }
 
-/* Sound360 color button animations */
-.bg-sound360:hover:not(:disabled) {
-  background-color: #006ba8 !important;
-  box-shadow: 0 0 20px rgba(0, 132, 209, 0.4);
-}
 
 .bg-black:hover:not(:disabled) {
   background-color: #1f1f1f !important;

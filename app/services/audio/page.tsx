@@ -154,7 +154,7 @@ export default function AudioPage() {
                     <Volume2 className="w-8 h-8 text-white" />
                   </div>
                   <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">Professional Audio</h2>
-                  <p className="text-xl text-gray-600 mb-6 leading-relaxed">
+                  <p className="text-gray-700 mb-6 leading-relaxed">
                     Crystal-clear sound systems, mixing consoles, and acoustic solutions for any venue size.
                   </p>
                   <p className="text-gray-700 mb-8 leading-relaxed">
