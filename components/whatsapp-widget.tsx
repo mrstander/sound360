@@ -35,7 +35,7 @@ export function WhatsAppWidget() {
           {isOpen && (
             <div className="absolute bottom-20 right-0 mb-2 w-80 bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden animate-fade-in">
               {/* Header */}
-              <div className="bg-[#25D366] text-white p-4 flex items-center justify-between">
+              <div className="bg-[#0b92e0] text-white p-4 flex items-center justify-between">
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
                     <WhatsAppIcon className="w-6 h-6" />
@@ -53,22 +53,13 @@ export function WhatsAppWidget() {
               {/* Message Content */}
               <div className="p-4 space-y-4">
                 <div className="bg-gray-100 rounded-2xl rounded-tl-sm p-3 max-w-[85%]">
-                  <p className="text-sm text-gray-800">👋 Hi there! Welcome to Sound360!</p>
-                </div>
-                <div className="bg-gray-100 rounded-2xl rounded-tl-sm p-3 max-w-[85%]">
-                  <p className="text-sm text-gray-800">
-                    We're here to help with all your event production needs - from professional audio and lighting to
-                    complete event management.
-                  </p>
-                </div>
-                <div className="bg-gray-100 rounded-2xl rounded-tl-sm p-3 max-w-[85%]">
-                  <p className="text-sm text-gray-800">How can we make your event unforgettable? 🎵✨</p>
+                  <p className="text-sm text-gray-800">👋 Hi there! Welcome to SOUND360 Whatsapp channel!</p>
                 </div>
 
                 {/* CTA Button */}
                 <button
                   onClick={handleWhatsAppClick}
-                  className="w-full bg-[#25D366] text-white py-3 px-4 rounded-xl font-medium hover:bg-[#20B954] transition-all duration-300 flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl hover:scale-105"
+                  className="w-full bg-[#0b92e0] text-white py-3 px-4 rounded-xl font-medium hover:bg-[#0b92e0] transition-all duration-300 flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl hover:scale-105"
                 >
                   <WhatsAppIcon className="w-5 h-5" />
                   <span>Start Chat on WhatsApp</span>
@@ -92,7 +83,7 @@ export function WhatsAppWidget() {
                           const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`
                           window.open(whatsappUrl, "_blank")
                         }}
-                        className="w-full text-left text-sm text-gray-600 hover:text-[#25D366] hover:bg-gray-50 p-2 rounded-lg transition-all duration-300"
+                        className="w-full text-left text-sm text-gray-600 hover:text-[#0b92e0] hover:bg-gray-50 p-2 rounded-lg transition-all duration-300"
                       >
                         {option}
                       </button>

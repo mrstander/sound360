@@ -7,8 +7,9 @@ import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Phone, Mail, MapPin, Clock, MessageCircle, ChevronDown, CheckCircle, AlertCircle } from "lucide-react"
+import { Phone, Mail, MapPin, Clock, MessageCircle, ChevronDown, CheckCircle, AlertCircle,Facebook, Instagram } from "lucide-react"
 import { sendContactEmail } from "@/app/actions/send-email"
+import Link from "next/link"
 
 function SubmitButton() {
   const { pending } = useFormStatus()
@@ -252,6 +253,10 @@ export default function ContactPage() {
                           <input type="checkbox" name="production" className="mr-2" />
                           <span className="text-sm">Event Production</span>
                         </label>
+                        <label className="flex items-center">
+                          <input type="checkbox" name="dance" className="mr-2" />
+                          <span className="text-sm">Dance Floor</span>
+                        </label>
                       </div>
                     </div>
 
@@ -284,7 +289,7 @@ export default function ContactPage() {
                         </div>
                         <div>
                           <h4 className="font-semibold mb-1">Phone</h4>
-                          <p className="text-white/90">067 111 4362</p>
+                          <Link href="tel:0671114362" className="text-white/90">067 111 4362</Link>
                         </div>
                       </div>
 
@@ -294,8 +299,8 @@ export default function ContactPage() {
                         </div>
                         <div>
                           <h4 className="font-semibold mb-1">Email</h4>
-                          <p className="text-white/90">info@sound360.co.za</p>
-                          <p className="text-sm text-white/70">We'll respond within 2 hours</p>
+                          <Link href="mailto:info@sound360.co.za" className="text-white/90" >info@sound360.co.za</Link>
+                          
                         </div>
                       </div>
 
@@ -316,9 +321,41 @@ export default function ContactPage() {
                         <div>
                           <h4 className="font-semibold mb-1">Business Hours</h4>
                           <p className="text-white/90">8:00 AM - 5:00 PM</p>
-                         
                         </div>
                       </div>
+                      <div className="flex flex-col space-y-3">
+  <h4 className="font-semibold mb-1 text-white">Follow Us</h4>
+
+  <div className="flex space-x-6">
+    
+
+    {/* Instagram */}
+    <Link
+      href="https://www.instagram.com/sound360"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex items-center  text-white/90 hover:text-sound360 transition-colors"
+    >
+      <div className="  hover:bg-sound360/30 transition">
+        <Instagram className="w-6 h-6" />
+      </div>
+      
+    </Link>
+    {/* Facebook */}
+    <Link
+      href="https://www.facebook.com/sound360"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex items-center  text-white/90 hover:text-sound360 transition-colors"
+    >
+      <div className="  hover:bg-sound360/30 transition">
+        <Facebook className="w-6 h-6" />
+      </div>
+      
+    </Link>
+  </div>
+</div>
+
                     </div>
                   </div>
 
